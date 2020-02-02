@@ -9,6 +9,7 @@
 //#include "zombieMeProjectile.h"
 #include "PhysicsEngine/PhysicsConstraintComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "WeaponCollision.h"
 
 // Sets default values
 AZombie::AZombie()
@@ -73,17 +74,18 @@ void AZombie::HitTargetCollisionOnOverlapBegin(UPrimitiveComponent* OverlappedCo
 
 	if (OtherActor)
 	{
-		//AZombieMeProjectile* Bullet = Cast<AZombieMeProjectile>(OtherActor);
-		//if (Bullet)
-		//{
-		//	// We assume that the collsion volum will has at least one child which is the decal
-		//	USceneComponent* DecalComponent = OverlappedComponent->GetChildComponent(0);
-		//	if (DecalComponent)
-		//	{
-		//		UE_LOG(LogTemp, Warning, TEXT("zomebie point hidden"));
+		
+		AWeaponCollision* Weapon = Cast<AWeaponCollision>(OtherActor);
+		if (Weapon && Weapon->bEnabled)
+		{
+			// We assume that the collsion volum will has at least one child which is the decal
+			USceneComponent* DecalComponent = OverlappedComponent->GetChildComponent(0);
+			if (DecalComponent)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("zomebie point hidden"));
 
-		//		DecalComponent->SetHiddenInGame(true);
-		//	}
-		//}
+				DecalComponent->SetHiddenInGame(true);
+			}
+		}
 	}
 }
