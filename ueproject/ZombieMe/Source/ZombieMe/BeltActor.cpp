@@ -2,20 +2,23 @@
 
 
 #include "BeltActor.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 ABeltActor::ABeltActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	DummyComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy Scene Component"));
+	SetRootComponent(DummyComponent);
 	BeltStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Conveyor Belt Mesh"));
+	BeltStaticMeshComponent->AttachTo(DummyComponent);
 }
 
 // Called when the game starts or when spawned
 void ABeltActor::BeginPlay()
 {
 	Super::BeginPlay();
-	StartTransform = GetActorTransform();
 }
 
 // Called every frame
@@ -28,10 +31,7 @@ void ABeltActor::Tick(float DeltaTime)
 	{
 		CurrentTranslation = 0;
 	}
-	FVector StartTranslation = StartTransform.GetTranslation();
-	FTransform NewTransform = StartTransform;
-	NewTransform.SetTranslation(FVector(StartTranslation.X + CurrentTranslation, StartTranslation.Y, StartTranslation.Z));
-	SetActorTransform(NewTransform);
 
+	BeltStaticMeshComponent->SetRelativeLocation(FVector(CurrentTranslation, 0, 0));
 }
 

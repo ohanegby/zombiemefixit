@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "BeltActor.generated.h"
+#include "CogActor.generated.h"
 
 UCLASS()
-class ZOMBIEME_API ABeltActor : public AActor
+class ZOMBIEME_API ACogActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ABeltActor();
+	ACogActor();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,16 +24,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere)
-		USceneComponent* DummyComponent;
+	USceneComponent* DummyComponent;
 
 	UPROPERTY(EditAnywhere)
-		class UStaticMeshComponent* BeltStaticMeshComponent;
+	UStaticMeshComponent* CogMeshComponent;
 
 	UPROPERTY(EditAnywhere)
-		float BeltMovingSpeed;
+	float RotationSpeed;
 
-	UPROPERTY(EditAnywhere)
-		float ResetDistance;    //How far it can move before it's placed at the beginning location
-
-	float CurrentTranslation = 0;
+	FRotator RotatePitch;
 };
