@@ -35,6 +35,8 @@ AZombie::AZombie()
 	NeckCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NeckCollision"));
 	NeckCollision->SetupAttachment(Mesh, FName("NeckHitPoint"));
 
+	counter = 5;
+
 }
 
 // Called when the game starts or when spawned
@@ -84,7 +86,9 @@ void AZombie::HitTargetCollisionOnOverlapBegin(UPrimitiveComponent* OverlappedCo
 			{
 				UE_LOG(LogTemp, Warning, TEXT("zomebie point hidden"));
 
-				DecalComponent->SetHiddenInGame(true);
+				//DecalComponent->SetHiddenInGame(true);
+				DecalComponent->DestroyComponent(true);
+				counter--;
 			}
 		}
 	}
